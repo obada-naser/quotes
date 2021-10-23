@@ -5,6 +5,8 @@ package quotes;
 
 import java.io.IOException;
 
+
+
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -13,9 +15,11 @@ public class App {
     public static void main(String[] args) throws IOException {
         System.out.println(new App().getGreeting());
 
-        JsonFile jsonFile=new JsonFile();
 
-        jsonFile.quotesFromJson();
+
+        JsonFile.quotesFromJson();
+
+
 
     }
 

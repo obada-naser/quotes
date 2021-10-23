@@ -3,7 +3,20 @@
  */
 package quotes;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import org.junit.Test;
+
+import java.io.*;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Random;
+
 import static org.junit.Assert.*;
 
 public class AppTest {
@@ -11,4 +24,44 @@ public class AppTest {
         App classUnderTest = new App();
         assertNotNull("app should have a greeting", classUnderTest.getGreeting());
     }
+    @Test public void jsonFileReadingTest() throws IOException {
+
+
+
+        Gson gson = new Gson();
+        Reader reader = Files.newBufferedReader(Paths.get("data.json"));
+        BufferedReader inputReader=new BufferedReader(reader);
+        String line=inputReader.readLine();
+
+        assertEquals(line, JsonFile.jsonFileReading());
+
+
+
+
+    }
+
+    @Test void connectionTestURL () throws IOException {
+        String url = "http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en";
+
+        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+
+        assertNotEquals(404,connection.getResponseCode());
+    }
+
+    @Test void testConstructor () {
+        JsonFile json = new JsonFile("My","Name","is","obada");
+        String author  = json.getAuthor();
+        String quote = json.getText();
+
+        String quoteText = json.getQuoteText();
+        String quoteAuthor = json.getQuoteAuthor();
+
+        assertEquals(author,json.getAuthor());
+        assertEquals(quote,json.getText());
+        assertEquals(quoteAuthor,json.getQuoteAuthor());
+        assertEquals(quoteText,json.getQuoteText());
+
+    }
+
+
 }
